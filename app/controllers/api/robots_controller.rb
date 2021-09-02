@@ -1,18 +1,14 @@
 class Api::RobotsController < ApplicationController
     def orders
         str =params[:input]
-        # puts "enter the robot commands"
-        # str=gets.chomp
         array=str.split(" ")
         if(array[0]== "PLACE")
-             
-        
-            myarray=[]
+          
             co=array[1].split(",")
             x=co[0].to_i
             y=co[1].to_i
             
-            if x & y == 0..4 
+            if x < 5 && x >= 0 && y < 5 && y >= 0
                 for i in (2...array.length)
                     if array[i] == "NORTH"
             
@@ -47,7 +43,7 @@ class Api::RobotsController < ApplicationController
                         if array[array.length-1] == "REPORT"
                             a = []
                             a.push(x,y,array[i])
-                            # puts "#{x},#{y}, #{array[i]}"
+                            
                             render json: a ,status: :ok
                         end
                 
@@ -83,7 +79,7 @@ class Api::RobotsController < ApplicationController
                         if array[array.length-1] == "REPORT"
                             a = []
                             a.push(x,y,array[i])
-                            # puts "#{x},#{y}, #{array[i]}"
+                            
                             render json: a ,status: :ok
                         end
                 
@@ -118,7 +114,7 @@ class Api::RobotsController < ApplicationController
                         if array[array.length-1] == "REPORT"
                             a = []
                             a.push(x,y,array[i])
-                            # puts "#{x},#{y}, #{array[i]}"
+                            
                             render json: a ,status: :ok
                         end
                     elsif array[i]== "WEST"
@@ -152,14 +148,15 @@ class Api::RobotsController < ApplicationController
                         if array[array.length-1] == "REPORT"
                             a = []
                             a.push(x,y,array[i])
-                            # puts "#{x},#{y}, #{array[i]}"
+            
                             render json: a ,status: :ok
                         end
                     
                     end
                     
                 end
-                
+            else 
+                render json: {msg: "Robot not placed on table"}, status: :unprocessable_entity   
             end
         end 
     end
